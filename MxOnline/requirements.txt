@@ -1,0 +1,6 @@
+django==2.2
+mysqlclient==1.4.6
+pillow
+django-pure-pagination
+redis
+django-simple-captcha
