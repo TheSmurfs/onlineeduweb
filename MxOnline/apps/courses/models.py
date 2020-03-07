@@ -6,7 +6,7 @@ from apps.users.models import BaseModel
 from apps.organizations.models import Teacher
 from apps.organizations.models import CourseOrg
 
-
+from DjangoUeditor.models import UEditorField
 
 #1. 设计表结构有几个重要的点
 """
@@ -19,8 +19,8 @@ from apps.organizations.models import CourseOrg
 
 
 class Course(BaseModel):
-#    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name="讲师")
-#    course_org = models.ForeignKey(CourseOrg, null=True, blank=True, on_delete=models.CASCADE, verbose_name="课程机构")
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name="讲师")
+    course_org = models.ForeignKey(CourseOrg, null=True, blank=True, on_delete=models.CASCADE, verbose_name="课程机构")
     name = models.CharField(verbose_name="课程名", max_length=50)
     desc = models.CharField(verbose_name="课程描述", max_length=300)
     learn_times = models.IntegerField(default=0, verbose_name="学习时长(分钟数)")
@@ -34,9 +34,8 @@ class Course(BaseModel):
     youneed_know = models.CharField(default="", max_length=300, verbose_name="课程须知")
     teacher_tell = models.CharField(default="", max_length=300, verbose_name="老师告诉你")
     is_classics = models.BooleanField(default=False, verbose_name="是否经典")
-    detail = models.TextField(verbose_name="课程详情")
-#    detail = UEditorField(verbose_name="课程详情", width=600, height=300, imagePath="courses/ueditor/images/",
-#                          filePath="courses/ueditor/files/", default="")
+    detail = UEditorField(verbose_name="课程详情", width=600, height=300, imagePath="courses/ueditor/images/",
+                          filePath="courses/ueditor/files/", default="")
     is_banner = models.BooleanField(default=False, verbose_name="是否广告位")
     image = models.ImageField(upload_to="courses/%Y/%m", verbose_name="封面图", max_length=100)
 

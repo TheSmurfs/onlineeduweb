@@ -8,4 +8,4 @@ class UserProfileAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(UserProfile, UserAdmin)
+# admin.site.register(UserProfile, UserAdmin)

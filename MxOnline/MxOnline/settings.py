@@ -15,19 +15,35 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '*!ofebi4*7j_6g9qf4%+=6_$f%09$kce-ds@b!$hu*+17%8x37'
+SECRET_KEY = 'y^5kf!gdipf(z5m92=$rrrjd_r6g0sxs1j_&@gon8w8)5fa!b-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
 
 # Application definition
 
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+AUTHENTICATION_BACKENDS = [
+    "apps.users.views.CustomAuth"
+]
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,18 +57,11 @@ INSTALLED_APPS = [
     'apps.operations.apps.OperationsConfig',
     'crispy_forms',
     'xadmin.apps.XAdminConfig',
+    'captcha',
+    'pure_pagination',
+    'DjangoUeditor',
+    'import_export',
 ]
-
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-
 ROOT_URLCONF = 'MxOnline.urls'
 
 TEMPLATES = [
@@ -67,12 +76,15 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
+                'apps.users.views.message_nums'
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'MxOnline.wsgi.application'
+
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
@@ -86,6 +98,8 @@ DATABASES = {
         'HOST': "127.0.0.1"
     }
 }
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -105,8 +119,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 AUTH_USER_MODEL = "users.UserProfile"
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -120,11 +134,37 @@ USE_L10N = True
 
 USE_TZ = False
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'apps/'),
 ]
+
+#云片网相关设置
+yp_apikey = "d6c4ddbf50ab36611d2f52041a0b949e"
+
+#redis相关配置
+REDIS_HOST = "127.0.0.1"
+REDIS_PORT = 6379
+# sudo apt-get install redis-server
+# sudo apt-get install redis-cli
+#1.如果重启django 变量不存在
+#2.随着验证码越来越多，内存占用越来越大，验证码过期
+#3. redis k-v
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+#分页相关设置
+PAGINATION_SETTINGS = {
+    'PAGE_RANGE_DISPLAYED': 6,
+    'MARGIN_PAGES_DISPLAYED': 1,
+    'SHOW_FIRST_PAGE_WHEN_INVALID': True,
+}
+
+#每次迭代更新的时候，一旦有静态文件(css, js)
+#fabric ansible docker
