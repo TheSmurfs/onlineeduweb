@@ -4,7 +4,7 @@ import json
 def send_single_sms(apikey, code, mobile):
     #发送单条短信
     url = "https://sms.yunpian.com/v2/sms/single_send.json"
-    text = "【慕学生鲜】您的验证码是{}。如非本人操作，请忽略本短信".format(code)
+    text = "【我的家】您的验证码是{}。如非本人操作，请忽略本短信".format(code)
 
     res = requests.post(url, data={
         "apikey": apikey,
@@ -12,11 +12,11 @@ def send_single_sms(apikey, code, mobile):
         "text": text
     })
     re_json = json.loads(res.text)
-    return re_json
+    return res
 
 
 if __name__ == "__main__":
-    res = send_single_sms("d6c4ddbf50ab36611d2f52041a0b949e", "123456",          "18782902568")
+    res = send_single_sms("693127ff45b13482b34e1474c46d50c2", "520520",          "17854282982")
     import json
     res_json = json.loads(res.text)
     code = res_json["code"]

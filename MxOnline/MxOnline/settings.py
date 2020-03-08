@@ -144,7 +144,7 @@ STATICFILES_DIRS = [
 ]
 
 #云片网相关设置
-yp_apikey = "d6c4ddbf50ab36611d2f52041a0b949e"
+yp_apikey = "693127ff45b13482b34e1474c46d50c2"
 
 #redis相关配置
 REDIS_HOST = "127.0.0.1"
