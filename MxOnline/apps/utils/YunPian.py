@@ -12,7 +12,7 @@ def send_single_sms(apikey, code, mobile):
         "text": text
     })
     re_json = json.loads(res.text)
-    return res
+    return re_json
 
 
 if __name__ == "__main__":
